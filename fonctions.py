@@ -8,11 +8,12 @@ def ajouter_un_champion():
         for lign in reader:
             nom_existant.add(lign["Nom"])
     while True:
-        Nom=str(input("Quel est le Nom du Champion ? : "))
+        Nom=str(input("Quel est le Nom du Champion ? (q pour quitter) : "))
         if Nom.strip().lower()=="q":
             break
 
-        if Nom in nom_existant:
+        if Nom.strip().capitalize() in nom_existant:
+            print("Champions déjà dans la liste")
             continue
         else:
             break
@@ -51,7 +52,7 @@ def ajouter_un_champion():
             Degat=Degats[numero_degat]
         with open("champions.csv", 'a', encoding='utf-8', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow([Nom, Classe, Role, Degat])
+            writer.writerow([Nom.strip().capitalize(), Classe, Role, Degat])
         break
     
         
@@ -62,4 +63,29 @@ def afficher_champions():
             affichage = f"Nom => {ligne['Nom']} | Role => {ligne['Role']} | Classe => {ligne['Classe']} | Type_de_Dégats => {ligne['Type_de_Dégats']}"
             print(f"{affichage}\n")
 
-afficher_champions()
+def menu():
+    while True :
+        menus={"1":"Afficher les champions","2":"Ajouter des champions", "q":"Quitter"}
+        for cle, valeur in menus.items():
+            print(f"{cle} : {valeur}")
+        choix=input("Que voulez vous faire ? (Entrez le numéro correspondant ou q) : ")
+        if choix.strip().lower()=="q":
+            confirmation=input("Voulez-vous Quitter le menu ? (Oui ou Non) : ")
+            if confirmation.strip().lower()=="oui":
+                print("vous avez quitté le menu")
+                break
+            elif confirmation.strip().lower()=="non":
+                print("retour au menu principal")
+                continue
+            else:
+                print("choix invalide, retour au menu principal")
+                continue
+        if choix.strip().lower() == "1":
+            afficher_champions()
+            continue
+        if choix.strip().lower()== "2":
+            ajouter_un_champion()
+            continue
+
+menu()
+
