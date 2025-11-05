@@ -57,15 +57,26 @@ def ajouter_un_champion():
     
         
 def afficher_champions():
-     with open("champions.csv", 'r', encoding='utf-8', newline='') as f:
+    with open("champions.csv", 'r', encoding='utf-8', newline='') as f:
         reader=csv.DictReader(f)
         for ligne in reader:
             affichage = f"Nom => {ligne['Nom']} | Role => {ligne['Role']} | Classe => {ligne['Classe']} | Type_de_Dégats => {ligne['Type_de_Dégats']}"
             print(f"{affichage}\n")
 
+def rechercher_un_champion():
+    with open("champions.csv", "r", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        champions = list(reader)
+        recherche=input("Entrez la suite de lettre à rechercher : ").strip().lower()
+        for champion in champions :
+            if recherche in champion['Nom'].lower():
+                affichage = f"Nom => {champion['Nom']} | Role => {champion['Role']} | Classe => {champion['Classe']} | Type_de_Dégats => {champion['Type_de_Dégats']}"
+                print(f"\n{affichage}\n")
+
+
 def menu():
     while True :
-        menus={"1":"Afficher les champions","2":"Ajouter des champions", "q":"Quitter"}
+        menus={"1":"Afficher les champions","2":"Ajouter des champions","3":"Rechercher des champions","q":"Quitter"}
         for cle, valeur in menus.items():
             print(f"{cle} : {valeur}")
         choix=input("Que voulez vous faire ? (Entrez le numéro correspondant ou q) : ")
@@ -85,6 +96,9 @@ def menu():
             continue
         if choix.strip().lower()== "2":
             ajouter_un_champion()
+            continue
+        if choix.strip().lower()== "3":
+            rechercher_un_champion()
             continue
 
 menu()
