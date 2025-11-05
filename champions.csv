@@ -1,10 +1,11 @@
-Nom,Role,Classe,Type_de_Dégats
-Garen,Toplane,juggernaut,Physique
-Evelynn,Jungle,Assassin,Magique
-Oriana,Midlane,Mage,Magique
-Kai'sa,ADC,Tireur,Mixed
-Pyke,Support,Assassin,Physique
-Vayne,Tireur,ADC,Physique
-Lux,Mage,Midlane,Magique
-Xin Zhao,Bruiser,Jungle,Physique
-Leblanc,Assassin,Midlane,Magique
+Nom,Role,Classe,Type_de_Dégats,Déjà_Joué
+Garen,Toplane,juggernaut,Physique,Oui
+Evelynn,Jungle,Assassin,Magique,Oui
+Oriana,Midlane,Mage,Magique,Oui
+Kai'sa,ADC,Tireur,Mixed,Non
+Pyke,Support,Assassin,Physique,Oui
+Vayne,Tireur,ADC,Physique,Oui
+Lux,Mage,Midlane,Magique,Oui
+Xin Zhao,Bruiser,Jungle,Physique,Oui
+Leblanc,Assassin,Midlane,Magique,Non
+Volibear,Juggernaut,Toplane,Mixed,Oui
