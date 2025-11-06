@@ -1,4 +1,5 @@
 import csv
+import Levenshtein
   
 
 
@@ -87,7 +88,10 @@ def rechercher_un_champion():
         champions = list(reader)
         recherche=input("Entrez la suite de lettre à rechercher : ").strip().lower()
         for champion in champions :
-            if recherche in champion['Nom'].lower():
+            dst=Levenshtein.distance(recherche, champion['Nom'])
+            is_partial_match = recherche in champion['Nom'].lower()
+            is_approx_match = dst <4
+            if is_approx_match or is_partial_match:
                 affichage = f"Nom => {champion['Nom']} | Role => {champion['Role']} | Classe => {champion['Classe']} | Type_de_Dégats => {champion['Type_de_Dégats']}"
                 print(f"\n{affichage}\n")
 
@@ -124,9 +128,34 @@ def supprimer_un_champion():
 
 
 
+def marquer_a_joue():
+    with open("champions.csv", "r", encoding="utf-8") as f:
+        reader = list(csv.DictReader(f))
+        fieldnames = reader[0].keys()
+
+    
+    marked = input("Entrez le nom du champion : ").strip()
+
+    count = -1
+    for i, ligne in enumerate(reader):
+        if ligne["Nom"].lower() == marked.lower():
+            ligne['Déjà_Joué']="Oui"
+            count = i
+    if count == -1:
+        print(f"Le champion '{marked.capitalize()}' n'a pas été trouvé.")
+        return
+
+
+    with open("champions.csv", "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(reader)
+        print(f"Bien reçu, vous avez déjà joué {marked.capitalize()}")
+
+
 def menu():
     while True :
-        menus={"1":"Afficher les champions","2":"Ajouter des champions","3":"Rechercher des champions","4":"Supprimer un champion" ,"q":"Quitter"}
+        menus={"1":"Afficher les champions","2":"Ajouter des champions","3":"Rechercher des champions","4":"Supprimer un champion","5":"Marquer à joué" ,"q":"Quitter"}
         for cle, valeur in menus.items():
             print(f"{cle} : {valeur}")
         choix=input("Que voulez vous faire ? (Entrez le numéro correspondant ou q) : ")
@@ -152,6 +181,9 @@ def menu():
             continue
         if choix.strip().lower()== "4":
             supprimer_un_champion()
+            continue
+        if choix.strip().lower()== "5":
+            marquer_a_joue()
             continue
 
 
